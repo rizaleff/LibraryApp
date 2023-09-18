@@ -8,36 +8,57 @@ namespace LibraryApp
 {
     internal class LibraryCatalog
     {
-        public List<Book> books;
+        public List<Book> Books { get; set; }
 
-        public LibraryCatalog() 
+        public ErrorHandler errorHandler;
+
+        public LibraryCatalog()
         {
-            books = new List<Book>();
-            books.Add(new Book("Biografi Saya", "Rizal Effendi", 2023));
-            books.Add(new Book("Obat Malas Dosis Tinggi", "Mahmud Baharuddin", 2019));
-        }
-        public LibraryCatalog(Book book) 
-        {
-            books = new List<Book> ();
-            books.Add (book);
+
+            errorHandler = new ErrorHandler();
+            Books = new List<Book>();
+            Books.Add(new Book("1111", "Biografi Saya", "Rizal Effendi", 2023));
+            Books.Add(new Book("2222", "Obat Malas Dosis Tinggi", "Mahmud Baharuddin", 2019));
         }
 
+        public void AddBook(Book book)
+        {
+            Books.Add (book);
+        }
         public void RemoveBook(Book book)
         {
-            books.Remove(book);
+            Books.Remove(book);
         }
         public void FindBook(string title)
         {
+            List<Book> booksFound;
             
+            errorHandler.FindBookHandler(title, Books, out booksFound);
+
+            if(errorHandler.IsError)
+            {
+                Console.WriteLine(errorHandler.Message);
+            }
+            else
+            {
+                Console.WriteLine("===========Pencarian Buku==========");
+                PrintAllBooks(booksFound);
+            };
+
         }
 
         public void ListBook()
         {
             Console.WriteLine("============KATALOG BUKU===========");
+            PrintAllBooks(Books);
+        }
+
+        private void PrintAllBooks(List<Book> books)
+        {
             foreach (Book book in books)
             {
-            
-               book.PrintBookData();
+
+                book.PrintBookData();
             }
         }
     }
