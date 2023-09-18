@@ -10,7 +10,7 @@ namespace LibraryApp
 {
     internal class ErrorHandler
     {
-        public bool IsError { get; private set; }
+
         public string Message { get; private set; }
 
         public Book AddBookHandler(string isbn, string title, string author, string publicationYearString, List<Book> books)
@@ -69,7 +69,6 @@ namespace LibraryApp
                     if (book.Isbn.Equals(isbn))
                     {
                         Message = "Data Berhasil Dihapus";
-                        Console.WriteLine(book.Isbn);
                         return book;
                     }
                     else
