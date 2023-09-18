@@ -63,16 +63,18 @@ namespace LibraryApp
         {
             if (!isNullOrEmptyOrWhiteSpace(isbn))
             {
-                Book book = new Book();
-                book = DuplicateISBN(isbn, books);  
-                if (book != null)
+                Message = "Nomor ISBN Tidak Ditemukan";
+                foreach (Book book in books)
                 {
-                    Message = "Data Berhasil Dihapus";
-                    return book;
-                }
-                else
-                {
-                    Message = "Nomor ISBN Tidak Ditemukan";
+                    if (book.Isbn.Equals(isbn))
+                    {
+                        Message = "Data Berhasil Dihapus";
+                        Console.WriteLine(book.Isbn);
+                        return book;
+                    }
+                    else
+                    {
+                    }
                 }
             }
             else
@@ -105,19 +107,6 @@ namespace LibraryApp
             }
             return false;
         }  
-        public Book DuplicateISBN(string input, List<Book> books)
-        {
-            books = new List<Book>();
-
-            foreach (Book book in books)
-            {
-                if (book.Isbn.Equals(input))
-                {
-                    return book;
-                }
-            }
-            return new Book();
-        }
 
         public bool isContainDigit(string input)
         {

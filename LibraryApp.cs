@@ -7,6 +7,9 @@ namespace LibraryApp
         public static void Main(string[] args)
         {
             LibraryCatalog catalog = new LibraryCatalog();
+            catalog.AddBook(new Book("1111", "Sejarah Indonesia", "Mahmud Baharuddin", 1999));
+            catalog.AddBook(new Book("2222", "Belajar C#", "Rizal Effendi", 2023));
+
             ErrorHandler handler = new ErrorHandler();
             Book tempBook = new Book();
 
@@ -64,14 +67,14 @@ namespace LibraryApp
                         Console.ReadLine();
                         break;
                     case "3":
-                        Console.Clear();
-                        catalog.ListBook();
-                        
-                        string subMenuChoice;
-                        bool isSubMenuActive = true;
 
+                        bool isSubMenuActive = true;
                         do
                         {
+                            Console.Clear();
+                            catalog.ListBook();
+                            string subMenuChoice;
+
                             Console.WriteLine("Pilihan ");
                             Console.WriteLine("1. Hapus Buku");
                             Console.WriteLine("2. Back");
@@ -90,11 +93,14 @@ namespace LibraryApp
                                         Console.WriteLine("----------------------------");
                                         catalog.RemoveBook(deleteBook);
                                         Console.WriteLine(handler.Message);
+                                        Console.ReadLine();
                                     }
                                     else
                                     {
                                         Console.WriteLine("----------------------------");
                                         Console.WriteLine(handler.Message);
+                                        Console.ReadLine() ;
+                                        
                                     }
                                     break;
                                 case "2":
