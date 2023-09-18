@@ -13,47 +13,6 @@ namespace LibraryApp
         public bool IsError { get; private set; }
         public string Message { get; private set; }
 
-        private static bool isNullOrEmptyOrWhiteSpace(string input)
-        {
-            return (string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input));
-        }
-
-        public  bool isDuplicateISBN(string input, List<Book> books)
-        {
-            books = new List<Book>();
-
-            foreach (Book book in books) 
-            {
-                if (book.Isbn.Equals(input))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public bool isContainDigit(string input)
-        {
-            return Regex.IsMatch(input, @"\d");
-        }
-
-        public bool isOnlyDigit(string input)
-        {
-            return Regex.IsMatch(input, @"^\d+$");
-        }
-
-        public bool CheckYear(string year)
-        {
-            if(year.Length == 4)
-            {
-                if (isOnlyDigit(year))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public Book AddBookHandler(string isbn, string title, string author, string publicationYearString, List<Book> books)
         {
             
@@ -100,30 +59,86 @@ namespace LibraryApp
         }
         
 
-        public void RemoveBookHandler(Book book)
+        public Book RemoveBookHandler(string isbn, List<Book> books)
         {
-            if (!isNullOrEmptyOrWhiteSpace(book.Isbn))
+            if (!isNullOrEmptyOrWhiteSpace(isbn))
             {
-
-            }
-        }
-
-        public void FindBookHandler(string inputTitle, List<Book> books, out List<Book> booksFound)
-        {
-            booksFound = new List<Book>();
-
-            booksFound = books.Where(book => book.Title.Contains(inputTitle, StringComparison.OrdinalIgnoreCase)).ToList();
-            
-            if (booksFound.Count > 0)
-            {
-                IsError = false;
-                Message = "Sukses";
+                Book book = new Book();
+                book = DuplicateISBN(isbn, books);  
+                if (book != null)
+                {
+                    Message = "Data Berhasil Dihapus";
+                    return book;
+                }
+                else
+                {
+                    Message = "Nomor ISBN Tidak Ditemukan";
+                }
             }
             else
             {
-                IsError = true;
-                Message = "Judul buku tidak ditemukan!!!";
+                Message = "Nomor ISBN Harus Diisi!!"; 
             }
+            return new Book();
+        }
+
+        public List<Book> FindBookHandler(string inputTitle, List<Book> books)
+        {
+            return books.Where(book => book.Title.Contains(inputTitle, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        private static bool isNullOrEmptyOrWhiteSpace(string input)
+        {
+            return (string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input));
+        }
+
+        public bool isDuplicateISBN(string input, List<Book> books)
+        {
+            books = new List<Book>();
+
+            foreach (Book book in books)
+            {
+                if (book.Isbn.Equals(input))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }  
+        public Book DuplicateISBN(string input, List<Book> books)
+        {
+            books = new List<Book>();
+
+            foreach (Book book in books)
+            {
+                if (book.Isbn.Equals(input))
+                {
+                    return book;
+                }
+            }
+            return new Book();
+        }
+
+        public bool isContainDigit(string input)
+        {
+            return Regex.IsMatch(input, @"\d");
+        }
+
+        public bool isOnlyDigit(string input)
+        {
+            return Regex.IsMatch(input, @"^\d+$");
+        }
+
+        public bool CheckYear(string year)
+        {
+            if (year.Length == 4)
+            {
+                if (isOnlyDigit(year))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }

@@ -17,8 +17,6 @@ namespace LibraryApp
 
             errorHandler = new ErrorHandler();
             Books = new List<Book>();
-            Books.Add(new Book("1111", "Biografi Saya", "Rizal Effendi", 2023));
-            Books.Add(new Book("2222", "Obat Malas Dosis Tinggi", "Mahmud Baharuddin", 2019));
         }
 
         public void AddBook(Book book)
@@ -33,11 +31,11 @@ namespace LibraryApp
         {
             List<Book> booksFound;
             
-            errorHandler.FindBookHandler(title, Books, out booksFound);
+            booksFound = errorHandler.FindBookHandler(title, Books);
 
-            if(errorHandler.IsError)
+            if(booksFound.Count==0)
             {
-                Console.WriteLine(errorHandler.Message);
+                Console.WriteLine("Judul Buku Tidak Ditemukan");
             }
             else
             {

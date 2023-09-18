@@ -1,36 +1,9 @@
-﻿namespace LibraryApp
+﻿using System.Reflection.Metadata;
+
+namespace LibraryApp
 {
     internal class LibraryApp
     {
-        private static void SubMenu()
-        {
-            string subMenuChoice;
-            bool isSubMenuActive = true;
-
-            do
-            {
-                Console.WriteLine("Pilihan ");
-                Console.WriteLine("1. Hapus Buku");
-                Console.WriteLine("2. Back");
-                Console.Write("Masukkan Pilihan: ");
-                subMenuChoice = Console.ReadLine();
-                switch (subMenuChoice)
-                {
-                    case "1":
-                        Console.Write("Pilih Nomor ISBN buku yang akan dihapus: ");
-                        Console.ReadLine();
-                        break;
-                    case "2":
-
-                        isSubMenuActive = false;
-                        break;
-                    default:
-                        Console.WriteLine("Input Pilihan Tidak Valid!!");
-                        break;
-
-                }
-            } while (isSubMenuActive);
-        }
         public static void Main(string[] args)
         {
             LibraryCatalog catalog = new LibraryCatalog();
@@ -93,7 +66,46 @@
                     case "3":
                         Console.Clear();
                         catalog.ListBook();
-                        SubMenu();
+                        
+                        string subMenuChoice;
+                        bool isSubMenuActive = true;
+
+                        do
+                        {
+                            Console.WriteLine("Pilihan ");
+                            Console.WriteLine("1. Hapus Buku");
+                            Console.WriteLine("2. Back");
+                            Console.Write("Masukkan Pilihan: ");
+                            subMenuChoice = Console.ReadLine();
+                            switch (subMenuChoice)
+                            {
+                                case "1":
+                                    Console.WriteLine("-------Cari Berdasarkan Judul Buku-------");
+                                    Console.Write("Pilih Nomor ISBN buku yang akan dihapus: ");
+                                    string inputIsbn = Console.ReadLine();
+                                    Book deleteBook = new Book();
+                                    deleteBook = handler.RemoveBookHandler(inputIsbn, catalog.Books);
+                                    if(deleteBook.Isbn != null)
+                                    {
+                                        Console.WriteLine("----------------------------");
+                                        catalog.RemoveBook(deleteBook);
+                                        Console.WriteLine(handler.Message);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("----------------------------");
+                                        Console.WriteLine(handler.Message);
+                                    }
+                                    break;
+                                case "2":
+                                    isSubMenuActive = false;
+                                    break;
+                                default:
+                                    Console.WriteLine("Input Pilihan Tidak Valid!!");
+                                    break;
+
+                            }
+                        } while (isSubMenuActive);
                         break;
                     case "4":
                         Console.Clear();
