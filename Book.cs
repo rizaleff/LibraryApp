@@ -10,13 +10,13 @@ namespace LibraryApp
     {
         public string Title { get; set; }
         public string Author { get; set; }
-        public string PublicationYear { get; set; }
+        public int PublicationYear { get; set; }
 
-        public Book (string title, string author, string publicationYear)
+        public Book (string title, string author, int publicationYear)
         {
             Title = title;
-            Author = author;   
-            PublicationYear = publicationYear
+            Author = author;
+            PublicationYear = publicationYear;
         }
 
         public void PrintBookData()
@@ -24,7 +24,7 @@ namespace LibraryApp
             Console.WriteLine($"Title            : {Title}");
             Console.WriteLine($"Author           : {Author}");
             Console.WriteLine($"Publication Year : {PublicationYear}");
-            Console.WriteLine("-----------------------------------------")
+            Console.WriteLine("-----------------------------------------");
         }
     }
 }
